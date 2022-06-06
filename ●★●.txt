@@ -1,4 +1,4 @@
-# 073springboot共享自习室预约管理系统
+springboot图书馆座位预约管理系统
 
 #### 项目介绍
 项目主要功能包括：
@@ -6,8 +6,6 @@
 用户管理：用户信息管理、用户投诉管理、投诉反馈信息、黑名单管理；
 座位管理：实时座位管理、座位使用预约记录，由管理员进行用户的座位预约操作；
 密码管理：重置密码；
-
-由于本程序规模不大，可供课程设计，毕业设计学习演示之用
 
 
 #### 环境需要
@@ -21,13 +19,6 @@
 #### 技术栈
 1. 后端：SpringBoot+Mybatis
 2. 前端：Thymeleaf+HTML+CSS+LayUI+bootstrap
-
-#### 使用说明
-1. 使用Navicat或者其它工具，在mysql中创建对应名称的数据库，并导入项目的sql文件；
-2. 使用IDEA/Eclipse/MyEclipse导入项目，Eclipse/MyEclipse导入时，若为maven项目请选择maven;若为maven项目，导入成功后请执行maven clean;maven install命令，然后运行；
-3. 将项目中application.yml配置文件中的数据库配置改为自己的配置;
-4. 运行项目，输入localhost:8080/index.html 登录
-管理员：zfx1232  密码：123456
 
 
 

@@ -10,16 +10,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
+/**
+ * Class {@code SeatResverController} 定义了关于座位预约相关的操作，包括保存预约信息，检验用户是否预约信息，删除预约信息，获取全部预约信息
+ * @author 蒋若曦
+ */
 @Controller
 public class SeatResverController {
 
     @Autowired
     SeatResverServiceImpl seatResverService;
-
-    /*
-    * 点击预约信息的提交按钮，保存该预约信息
-    * */
+    /**
+     * {@link #insertSeatResver(SeatResver, String)}
+     *
+     * <p>保存目标预约信息
+     * <a href="http://localhost:8080/insertSeatResver">Apache's Commons Lang</a>
+     * @param seatResver 预约实体
+     * @param status 状态
+     * @return msg
+     */
     @PostMapping("/insertSeatResver")
     @ResponseBody
     public Msg insertSeatResver(SeatResver seatResver,@RequestParam("status") String status){
@@ -27,9 +37,14 @@ public class SeatResverController {
         seatResverService.insertSeatResver(seatResver,status);
         return Msg.success().add("va_msg","预约座位信息插入成功！");
     }
-    /*
-    * 点击预约信息的提交按钮，校验该用户是否已经预约
-    * */
+    /**
+     * {@link #checkSeatResverUserID(Integer)}
+     *
+     * <p>校验该用户是否已经预约
+     * <a href="http://localhost:8080/insertSeatResver">Apache's Commons Lang</a>
+     * @param userid 用户id
+     * @return msg
+     */
     @GetMapping("/checkSeatResverUserID/{userid}")
     @ResponseBody
     public Msg checkSeatResverUserID(@PathVariable("userid") Integer userid){
@@ -40,9 +55,14 @@ public class SeatResverController {
             return Msg.success().add("va_msg","");
         }
     }
-    /*
-    * 点击取消按钮，删除预约信息（根据座位号）
-    * */
+    /**
+     * {@link #deleteSeatResver(Integer)}
+     *
+     * <p>根据座位号删除预约信息
+     * <a href="http://localhost:8080/deleteSeatResver">Apache's Commons Lang</a>
+     * @param seatid 座位id
+     * @return msg
+     */
     @DeleteMapping("/deleteSeatResver/{seatid}")
     @ResponseBody
     public Msg deleteSeatResver(@PathVariable("seatid") Integer seatid){
@@ -53,10 +73,14 @@ public class SeatResverController {
             return Msg.fail().add("va_msg","删除预约信息失败！");
         }
     }
-
-    /*
-    * 获取全部预约信息，返回到前端展示再页面中
-    * */
+    /**
+     * {@link #getSeatResverInfo(Integer)}
+     *
+     * <p>获取全部预约信息，返回到前端展示再页面中
+     * <a href="http://localhost:8080/getSeatResverInfo">Apache's Commons Lang</a>
+     * @param pn 页号
+     * @return 预约信息
+     */
     @GetMapping("/getSeatResverInfo")
     @ResponseBody
     public Msg getSeatResverInfo(@RequestParam(value = "pn",defaultValue = "1")Integer pn){
@@ -65,10 +89,15 @@ public class SeatResverController {
         PageInfo<SeatResver> page=new PageInfo<SeatResver>(all,5);
         return Msg.success().add("pageInfo",page);
     }
-
-    /*
-    * 模糊查询，seatid
-    * */
+    /**
+     * {@link #getSeatResver(Integer, Integer)}
+     *
+     * <p>根据座位id模糊查询返回座位预约信息
+     * <a href="http://localhost:8080/querySeatlike">Apache's Commons Lang</a>
+     * @param pn 页号
+     * @param seatid 座位id
+     * @return 预约信息
+     */
     @GetMapping("/querySeatlike/{seatid}")
     @ResponseBody
     public Msg getSeatResver(@PathVariable("seatid") Integer seatid

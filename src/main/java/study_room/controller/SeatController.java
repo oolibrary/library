@@ -10,21 +10,36 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class {@code SeatController} 定义了关于座位相关的操作，包括获取座位信息，修改作为状态
+ * @author 蒋若曦
+ */
 @Controller
 public class SeatController {
     @Autowired
     SeatServiceImpl seatService;
-    /*
-    * 获取数据库座位信息，返回map中
-    * */
+    /**
+     * {@link #seat(Map)}
+     *
+     * <p>获取全部座位信息
+     * <a href="http://localhost:8080/seat">Apache's Commons Lang</a>
+     * @param map 返回体
+     * @return "SeatResver"
+     */
     @GetMapping("/seat")
     public String seat(Map<String,Object> map){
         List<Seat> seats = seatService.getAll();
         map.put("seats",seats);
         return "SeatResver";
     }
-
-    //前端发起请求来修改座位状态，置为0
+    /**
+     * {@link #updateState(Integer)}
+     *
+     * <p>前端发起请求来修改座位状态，置为0 即取消预约
+     * <a href="http://localhost:8080/updateSeatState">Apache's Commons Lang</a>
+     * @param seatid 座位编号
+     * @return msg
+     */
     @PutMapping("/updateSeatState/{seatid}")
     @ResponseBody
     public Msg updateState(@PathVariable("seatid") Integer seatid){
@@ -35,6 +50,15 @@ public class SeatController {
             return Msg.fail().add("va_msg","状态位置0失败！");
         }
     }
+    /**
+     * {@link #updateState(Integer)}
+     *
+     * <p>前端发起请求来修改座位状态 更改为已预约或立即上座
+     * <a href="http://localhost:8080/updateSeatStateYY">Apache's Commons Lang</a>
+     * @param seatid 座位编号
+     * @param status 座位状态
+     * @return msg
+     */
     //前端发起请求来修改座位状态，置为1
     @PutMapping("/updateSeatStateYY")
     @ResponseBody

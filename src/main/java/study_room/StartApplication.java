@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 public class StartApplication {
-
     public static void main(String[] args) {
         org.springframework.context.ApplicationContext ac = SpringApplication.run(StartApplication.class, args);
         String url = "http://localhost:" + ac.getEnvironment().getProperty("server.port") + "/index.html";
@@ -21,7 +20,5 @@ public class StartApplication {
         } catch (Exception e) {
             System.out.println("自动打开浏览器失败");
         }
-
     }
-
 }

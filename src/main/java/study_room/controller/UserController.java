@@ -13,73 +13,88 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * Class {@code UserController} 定义了关于用户相关的操作，包括查找用户，删除用户，新增用户，更新用户，检查相关格式等
+ * @author 杨宇涵
+ */
 @Controller
 public class UserController {
 
     @Autowired
     UserServiceImpl userService;
-
-    /*
-    * queryUserlike  通过用户姓名进行模糊查询
-    * */
+    /**
+     * {@link #queryUserlikeId(Integer, String)}
+     *
+     * <p>通过用户姓名进行模糊查询
+     * <a href="http://localhost:8080/queryUserlike">Apache's Commons Lang</a>
+     * @param pn 页号
+     * @param username 用户名
+     * @return Msg
+     */
     @GetMapping("/queryUserlike/{username}")
     @ResponseBody
     public Msg queryUserlikeId(@RequestParam(value = "pn",defaultValue = "1") Integer pn,
                                @PathVariable("username") String username){
         PageHelper.startPage(pn,20);
         List<User> users = userService.queryByUserName(username);
-        PageInfo<User> page=new PageInfo<User>(users,5);
+        PageInfo<User> page= new PageInfo<>(users, 5);
         return Msg.success().add("pageInfo",page);
     }
-
-    /*
-    * 前端发送请求后端分页数据，
-    * */
+    /**
+     * {@link #userTables(Integer)}
+     *
+     * <p>前端发送请求后端分页数据
+     * <a href="http://localhost:8080/userTables">Apache's Commons Lang</a>
+     * @param pn 页号
+     * @return Msg
+     */
     @GetMapping("/userTables")
     @ResponseBody
     public Msg userTables(@RequestParam(value = "pn",defaultValue = "1") Integer pn){
         PageHelper.startPage(pn,7);
         List<User> users = userService.getAll();
-        PageInfo<User> page=new PageInfo<User>(users,5);
+        PageInfo<User> page= new PageInfo<>(users, 5);
         return Msg.success().add("pageInfo",page);
     }
-
-    //到tables页面
+    /**
+     * {@link #toUserTables(Map)}
+     *
+     * <p>跳转到tables页面
+     * <a href="http://localhost:8080/userTables">Apache's Commons Lang</a>
+     * @return Msg
+     */
     @RequestMapping("/usertables")
     public String toUserTables(Map<String,Object> map){
         List<User> users = userService.getAll();
         map.put("users",users);
         return "Tables";
     }
-
-    //点击编辑按键传入userid查询用户，返回用户信息
+    /**
+     * {@link #queryUserID(Integer, Map)}
+     *
+     * <p>通过userid获得用户信息
+     * <a href="http://localhost:8080/queryUserByID">Apache's Commons Lang</a>
+     * @return Msg（users）
+     */
     @GetMapping("/queryUserByID/{userid}")
     @ResponseBody
     public Msg queryUserID(@PathVariable("userid") Integer userid,Map<String,Object> map){
         User users = userService.getUserByID(userid);
         return Msg.success().add("users",users);
     }
-    /*
-    * 查询全部用户
-    */
-    /*@GetMapping("/user22")
-    public String getAllUser(Map<String,Object> map){
-        List<User> users = userService.getAll();
-        map.put("users",users);
-        return "Dashboard";
-    }*/
-
-
-
-    /*
-     * 用户删除请求
+    /**
+     * {@link #delEmp(String)}
+     *
+     * <p>根据 ids删除对应用户
+     * <a href="http://localhost:8080/user">Apache's Commons Lang</a>
+     * @param ids 删除用户们的id
+     * @return Msg
      */
     @DeleteMapping(value = "/user/{ids}")
     @ResponseBody
     public Msg delEmp(@PathVariable("ids") String ids) {
         if(ids.contains("-")) {
-            List<Integer> delids = new ArrayList<Integer>();
+            List<Integer> delids = new ArrayList<>();
             String[] split = ids.split("-");
             for (String string : split) {
                 delids.add(Integer.parseInt(string));
@@ -91,9 +106,13 @@ public class UserController {
         }
         return Msg.success();
     }
-
-    /*
-     * 用户更新
+    /**
+     * {@link #saveEmp(User)}
+     *
+     * <p>更新用户
+     * <a href="http://localhost:8080/user">Apache's Commons Lang</a>
+     * @param user 更新用户实体
+     * @return Msg
      */
     @PutMapping(value = "/user/{userID}")
     @ResponseBody
@@ -102,9 +121,13 @@ public class UserController {
         userService.updateUser(user);
         return Msg.success();
     }
-
-    /*
-     * 根据用户ID查询结果
+    /**
+     * {@link #getEmp(Integer)}
+     *
+     * <p>根据用户信息返回用户实体
+     * <a href="http://localhost:8080/user">Apache's Commons Lang</a>
+     * @param userID 用户id
+     * @return 用户实体
      */
     @GetMapping(value = "user/{id}")
     @ResponseBody
@@ -112,19 +135,22 @@ public class UserController {
         User user = userService.getUserByID(userID);
         return Msg.success().add("user", user);
     }
-    /*
-     * 检查用户名是否可用
+    /**
+     * {@link #checkAddUser(String)}
+     *
+     * <p>检查用户名是否可用，先判断用户名是否合法的表达式，再判断数据库用户名重复校验
+     * <a href="http://localhost:8080/checkAddUser">Apache's Commons Lang</a>
+     * @param userName 待检验的用户名
+     * @return msg
      */
     @RequestMapping(value = "/checkAddUser")
     @ResponseBody
     public Msg checkAddUser(@RequestParam("username")String userName) {
-        //先判断用户名是否合法的表达式
         String regex = "(^[a-zA-Z0-9_-]{6,16}$)|(^[\\u2E80-\\u9FFF]+$)";
         boolean c = userName.matches(regex);
         if(!c) {
             return Msg.fail().add("va_msg", "用户名可以是2-5位中文，或者6-16位英文和数字的组合");
         }
-        //数据库用户名重复校验
         boolean b = userService.checkUserName(userName);
         if(b) {
             return Msg.success().add("va_msg", "用户名可用");
@@ -132,20 +158,34 @@ public class UserController {
             return Msg.fail().add("va_msg",	"用户名已存在");
         }
     }
-    /*校验手机号码格式*/
+    /**
+     * {@link #checkAddTel(String)}
+     *
+     * <p>检查手机号码格式
+     * <a href="http://localhost:8080/checkAddTel">Apache's Commons Lang</a>
+     * @param userTel1 待检验的手机号
+     * @return msg
+     */
     @RequestMapping("/checkAddTel")
     @ResponseBody
     public Msg checkAddTel(@RequestParam(value = "usertel")String userTel1) {
         String userTel = userTel1.trim();
         String regex = "(^1\\d{10}$)";
         boolean matches = userTel.matches(regex);
-        if(matches == true){
+        if(matches){
             return Msg.success().add("va_msg","");
         }else{
             return Msg.fail().add("va_msg","手机号必须以1开头，11位的数字！");
         }
     }
-    /*校验年龄码格式*/
+    /**
+     * {@link #checkAddAge(Integer)}
+     *
+     * <p>检查年龄格式
+     * <a href="http://localhost:8080/checkAddAge">Apache's Commons Lang</a>
+     * @param userAge1 待检验的年龄
+     * @return msg
+     */
     @RequestMapping("/checkAddAge")
     @ResponseBody
     public Msg checkAddAge(@RequestParam(value = "userage")Integer userAge1) {
@@ -153,28 +193,40 @@ public class UserController {
         String userTel = s.trim();
         String regex = "(^\\d{1,3}$)";
         boolean matches = userTel.matches(regex);
-        if(matches == true){
+        if(matches){
             return Msg.success().add("va_msg","");
         }else{
             return Msg.fail().add("va_msg","请输入数字");
         }
     }
-    /*校验密码格式*/
+    /**
+     * {@link #checkAddPwd(String)}
+     *
+     * <p>检查密码格式
+     * <a href="http://localhost:8080/checkAddPwd">Apache's Commons Lang</a>
+     * @param userPwd1 待检验的密码
+     * @return msg
+     */
     @RequestMapping("/checkAddPwd")
     @ResponseBody
     public Msg checkAddPwd(@RequestParam(value = "userpwd")String userPwd1) {
         String userPwd = userPwd1.trim();
         String regex = "(^[a-zA-Z0-9_-]{6,16}$)";
         boolean matches = userPwd.matches(regex);
-        if(matches == true){
+        if(matches){
             return Msg.success().add("va_msg","");
         }else{
             return Msg.fail().add("va_msg","密码格式不正确：必须超过6位，小于16位的英文和数字！");
         }
     }
-
-     //点击保存按钮，新增用户
-
+    /**
+     * {@link #insertUser(User)}
+     *
+     * <p>新增用户
+     * <a href="http://localhost:8080/insertUser">Apache's Commons Lang</a>
+     * @param user 新增用户实体
+     * @return msg
+     */
     @PostMapping("/insertUser")
     @ResponseBody
     public Msg insertUser(User user){
@@ -182,16 +234,28 @@ public class UserController {
         userService.insertUser(user);
         return Msg.success().add("va_msg","插入成功！");
     }
-
-    //点击更新按钮，更新修改的数据
+    /**
+     * {@link #updateUser(User)}
+     *
+     * <p>更新用户数据
+     * <a href="http://localhost:8080/updateUser">Apache's Commons Lang</a>
+     * @param user 更新用户实体
+     * @return msg
+     */
     @PutMapping("/updateUser")
     @ResponseBody
     public Msg updateUser(User user){
         userService.updateUser(user);
         return Msg.success().add("va_msg","插入成功！");
     }
-
-    //用户删除
+    /**
+     * {@link #updateUser(User)}
+     *
+     * <p>删除用户
+     * <a href="http://localhost:8080/deleteUser">Apache's Commons Lang</a>
+     * @param userid 待删除的用户id
+     * @return msg
+     */
     @DeleteMapping("/deleteUser/{userid}")
     @ResponseBody
     public Msg deleteEmployee(@PathVariable("userid") Integer userid){
@@ -202,10 +266,14 @@ public class UserController {
             return Msg.fail().add("va_msg","用户删除失败！");
         }
     }
-
-    /*
-    * 前端ajax请求，查询userid是否在表中存在
-    * */
+    /**
+     * {@link #updateUser(User)}
+     *
+     * <p> 前端ajax请求，查询userid是否在表中存在
+     * <a href="http://localhost:8080/checkUserID">Apache's Commons Lang</a>
+     * @param userid 用户id
+     * @return msg
+     */
     @GetMapping("/checkUserID")
     @ResponseBody
     public Msg checkUserID(@RequestParam("userid") Integer userid){
