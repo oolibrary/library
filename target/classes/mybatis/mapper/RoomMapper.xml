@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zfx.dao.RoomMapper">
-  <resultMap id="BaseResultMap" type="com.zfx.entity.Room">
+<mapper namespace="study_room.dao.RoomMapper">
+  <resultMap id="BaseResultMap" type="study_room.entity.Room">
     <id column="roomID" jdbcType="INTEGER" property="roomid" />
     <result column="seatCount" jdbcType="VARCHAR" property="seatcount" />
     <result column="searRate" jdbcType="REAL" property="searrate" />
@@ -67,7 +67,7 @@
   <sql id="Base_Column_List">
     roomID, seatCount, searRate
   </sql>
-  <select id="selectByExample" parameterType="com.zfx.entity.RoomExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="study_room.entity.RoomExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -92,19 +92,19 @@
     delete from tb_room
     where roomID = #{roomid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.zfx.entity.RoomExample">
+  <delete id="deleteByExample" parameterType="study_room.entity.RoomExample">
     delete from tb_room
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.zfx.entity.Room">
+  <insert id="insert" parameterType="study_room.entity.Room">
     insert into tb_room (roomID, seatCount, searRate
       )
     values (#{roomid,jdbcType=INTEGER}, #{seatcount,jdbcType=VARCHAR}, #{searrate,jdbcType=REAL}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.zfx.entity.Room">
+  <insert id="insertSelective" parameterType="study_room.entity.Room">
     insert into tb_room
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="roomid != null">
@@ -129,7 +129,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.zfx.entity.RoomExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="study_room.entity.RoomExample" resultType="java.lang.Long">
     select count(*) from tb_room
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -161,7 +161,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zfx.entity.Room">
+  <update id="updateByPrimaryKeySelective" parameterType="study_room.entity.Room">
     update tb_room
     <set>
       <if test="seatcount != null">
@@ -173,7 +173,7 @@
     </set>
     where roomID = #{roomid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zfx.entity.Room">
+  <update id="updateByPrimaryKey" parameterType="study_room.entity.Room">
     update tb_room
     set seatCount = #{seatcount,jdbcType=VARCHAR},
       searRate = #{searrate,jdbcType=REAL}

@@ -172,9 +172,9 @@ public class UserController {
             return Msg.fail().add("va_msg","密码格式不正确：必须超过6位，小于16位的英文和数字！");
         }
     }
-    /****************************************************插入*********
-     * 点击保存按钮，新增用户
-     * */
+
+     //点击保存按钮，新增用户
+
     @PostMapping("/insertUser")
     @ResponseBody
     public Msg insertUser(User user){

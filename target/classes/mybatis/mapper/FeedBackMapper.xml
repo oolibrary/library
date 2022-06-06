@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zfx.dao.FeedBackMapper">
-  <resultMap id="BaseResultMap" type="com.zfx.entity.FeedBack">
+<mapper namespace="study_room.dao.FeedBackMapper">
+  <resultMap id="BaseResultMap" type="study_room.entity.FeedBack">
     <id column="fdID" jdbcType="INTEGER" property="fdid" />
     <result column="userID" jdbcType="INTEGER" property="userid" />
     <result column="cpID" jdbcType="INTEGER" property="cpid" />
@@ -69,7 +69,7 @@
   <sql id="Base_Column_List">
     fdID, userID, cpID, fdTime, fdText
   </sql>
-  <select id="selectByExample" parameterType="com.zfx.entity.FeedBackExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="study_room.entity.FeedBackExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -94,19 +94,19 @@
     delete from tb_feedback
     where fdID = #{fdid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.zfx.entity.FeedBackExample">
+  <delete id="deleteByExample" parameterType="study_room.entity.FeedBackExample">
     delete from tb_feedback
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.zfx.entity.FeedBack">
+  <insert id="insert" parameterType="study_room.entity.FeedBack">
     insert into tb_feedback (fdID, userID, cpID, 
       fdTime, fdText)
     values (#{fdid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{cpid,jdbcType=INTEGER}, 
       #{fdtime,jdbcType=TIMESTAMP}, #{fdtext,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.zfx.entity.FeedBack">
+  <insert id="insertSelective" parameterType="study_room.entity.FeedBack">
     insert into tb_feedback
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="fdid != null">
@@ -143,7 +143,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.zfx.entity.FeedBackExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="study_room.entity.FeedBackExample" resultType="java.lang.Long">
     select count(*) from tb_feedback
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -183,7 +183,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zfx.entity.FeedBack">
+  <update id="updateByPrimaryKeySelective" parameterType="study_room.entity.FeedBack">
     update tb_feedback
     <set>
       <if test="userid != null">
@@ -201,7 +201,7 @@
     </set>
     where fdID = #{fdid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zfx.entity.FeedBack">
+  <update id="updateByPrimaryKey" parameterType="study_room.entity.FeedBack">
     update tb_feedback
     set userID = #{userid,jdbcType=INTEGER},
       cpID = #{cpid,jdbcType=INTEGER},

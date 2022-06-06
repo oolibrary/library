@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zfx.dao.ManagerMapper">
-  <resultMap id="BaseResultMap" type="com.zfx.entity.Manager">
+<mapper namespace="study_room.dao.ManagerMapper">
+  <resultMap id="BaseResultMap" type="study_room.entity.Manager">
     <id column="managerID" jdbcType="INTEGER" property="managerid" />
     <result column="managerName" jdbcType="VARCHAR" property="managername" />
     <result column="managerTel" jdbcType="VARCHAR" property="managertel" />
@@ -68,7 +68,7 @@
   <sql id="Base_Column_List">
     managerID, managerName, managerTel, managerPwd
   </sql>
-  <select id="selectByExample" parameterType="com.zfx.entity.ManagerExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="study_room.entity.ManagerExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -93,19 +93,19 @@
     delete from tb_manager
     where managerID = #{managerid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.zfx.entity.ManagerExample">
+  <delete id="deleteByExample" parameterType="study_room.entity.ManagerExample">
     delete from tb_manager
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.zfx.entity.Manager">
+  <insert id="insert" parameterType="study_room.entity.Manager">
     insert into tb_manager (managerID, managerName, managerTel, 
       managerPwd)
     values (#{managerid,jdbcType=INTEGER}, #{managername,jdbcType=VARCHAR}, #{managertel,jdbcType=VARCHAR}, 
       #{managerpwd,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.zfx.entity.Manager">
+  <insert id="insertSelective" parameterType="study_room.entity.Manager">
     insert into tb_manager
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="managerid != null">
@@ -136,7 +136,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.zfx.entity.ManagerExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="study_room.entity.ManagerExample" resultType="java.lang.Long">
     select count(*) from tb_manager
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -172,7 +172,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zfx.entity.Manager">
+  <update id="updateByPrimaryKeySelective" parameterType="study_room.entity.Manager">
     update tb_manager
     <set>
       <if test="managername != null">
@@ -187,7 +187,7 @@
     </set>
     where managerID = #{managerid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zfx.entity.Manager">
+  <update id="updateByPrimaryKey" parameterType="study_room.entity.Manager">
     update tb_manager
     set managerName = #{managername,jdbcType=VARCHAR},
       managerTel = #{managertel,jdbcType=VARCHAR},

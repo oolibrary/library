@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zfx.dao.StatisticMapper">
-  <resultMap id="BaseResultMap" type="com.zfx.entity.Statistic">
+<mapper namespace="study_room.dao.StatisticMapper">
+  <resultMap id="BaseResultMap" type="study_room.entity.Statistic">
     <id column="staID" jdbcType="INTEGER" property="staid" />
     <result column="stadate" jdbcType="DATE" property="stadate" />
     <result column="seatU" jdbcType="INTEGER" property="seatu" />
@@ -70,7 +70,7 @@
   <sql id="Base_Column_List">
     staID, stadate, seatU, seatR, oth1, oth2
   </sql>
-  <select id="selectByExample" parameterType="com.zfx.entity.StatisticExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="study_room.entity.StatisticExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -95,19 +95,19 @@
     delete from tb_statistic
     where staID = #{staid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.zfx.entity.StatisticExample">
+  <delete id="deleteByExample" parameterType="study_room.entity.StatisticExample">
     delete from tb_statistic
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.zfx.entity.Statistic">
+  <insert id="insert" parameterType="study_room.entity.Statistic">
     insert into tb_statistic (staID, stadate, seatU, 
       seatR, oth1, oth2)
     values (#{staid,jdbcType=INTEGER}, #{stadate,jdbcType=DATE}, #{seatu,jdbcType=INTEGER}, 
       #{seatr,jdbcType=INTEGER}, #{oth1,jdbcType=VARCHAR}, #{oth2,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.zfx.entity.Statistic">
+  <insert id="insertSelective" parameterType="study_room.entity.Statistic">
     insert into tb_statistic
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="staid != null">
@@ -150,7 +150,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.zfx.entity.StatisticExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="study_room.entity.StatisticExample" resultType="java.lang.Long">
     select count(*) from tb_statistic
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -194,7 +194,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zfx.entity.Statistic">
+  <update id="updateByPrimaryKeySelective" parameterType="study_room.entity.Statistic">
     update tb_statistic
     <set>
       <if test="stadate != null">
@@ -215,7 +215,7 @@
     </set>
     where staID = #{staid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zfx.entity.Statistic">
+  <update id="updateByPrimaryKey" parameterType="study_room.entity.Statistic">
     update tb_statistic
     set stadate = #{stadate,jdbcType=DATE},
       seatU = #{seatu,jdbcType=INTEGER},

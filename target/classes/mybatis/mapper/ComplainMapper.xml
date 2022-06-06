@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zfx.dao.ComplainMapper">
-  <resultMap id="BaseResultMap" type="com.zfx.entity.Complain">
+<mapper namespace="study_room.dao.ComplainMapper">
+  <resultMap id="BaseResultMap" type="study_room.entity.Complain">
     <id column="cpID" jdbcType="INTEGER" property="cpid" />
     <result column="userID" jdbcType="INTEGER" property="userid" />
     <result column="cpDate" jdbcType="TIMESTAMP" property="cpdate" />
@@ -69,7 +69,7 @@
   <sql id="Base_Column_List">
     cpID, userID, cpDate, cpText, ps
   </sql>
-  <select id="selectByExample" parameterType="com.zfx.entity.ComplainExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="study_room.entity.ComplainExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -94,19 +94,19 @@
     delete from tb_complain
     where cpID = #{cpid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.zfx.entity.ComplainExample">
+  <delete id="deleteByExample" parameterType="study_room.entity.ComplainExample">
     delete from tb_complain
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.zfx.entity.Complain">
+  <insert id="insert" parameterType="study_room.entity.Complain">
     insert into tb_complain (cpID, userID, cpDate, 
       cpText, ps)
     values (#{cpid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{cpdate,jdbcType=TIMESTAMP}, 
       #{cptext,jdbcType=VARCHAR}, #{ps,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.zfx.entity.Complain">
+  <insert id="insertSelective" parameterType="study_room.entity.Complain">
     insert into tb_complain
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="cpid != null">
@@ -143,7 +143,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.zfx.entity.ComplainExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="study_room.entity.ComplainExample" resultType="java.lang.Long">
     select count(*) from tb_complain
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -183,7 +183,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zfx.entity.Complain">
+  <update id="updateByPrimaryKeySelective" parameterType="study_room.entity.Complain">
     update tb_complain
     <set>
       <if test="userid != null">
@@ -201,7 +201,7 @@
     </set>
     where cpID = #{cpid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zfx.entity.Complain">
+  <update id="updateByPrimaryKey" parameterType="study_room.entity.Complain">
     update tb_complain
     set userID = #{userid,jdbcType=INTEGER},
       cpDate = #{cpdate,jdbcType=TIMESTAMP},
